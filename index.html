@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>SCISA - Chamada Inteligente</title>
+</head>
+<body>
+
+  <header>
+    <h1>📚 SCISA – Sistema de Chamada Inteligente</h1>
+  </header>
+
+  <main>
+    <section id="geracao-qrcode">
+      <h2>📌 Gerar QR Code</h2>
+      <button onclick="gerarQRCode()">Gerar Novo QR Code</button>
+      <div id="qrcode-container"></div>
+      <p id="tempo-restante">Próximo QR Code em: 20s</p>
+    </section>
+
+    <section id="presencas-registradas">
+      <h2>✅ Alunos Presentes</h2>
+      <ul id="lista-presencas"></ul>
+    </section>
+  </main>
+
+  <script src="https://quickchart.io/qrcode?version=latest" async defer></script>
+  <script src="main.js"></script>
+</body>
+</html>
