@@ -1,5 +1,5 @@
 function gerarQRCode() {
-  fetch('https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec?action=criarHash')
+  fetch('https://script.google.com/macros/s/AKfycbxnexm6mi-5emwkICwwO_EEnxJrbhEhYItJNf26g66BeF2USNlHbYFI3_bOWM4IIWJb-w/exec?action=criarHash')
     .then(res => res.json())
     .then(data => {
       const url = `https://seu-dominio.com/form.html?hash=${data.hash}`;
