@@ -11,7 +11,7 @@ function gerarQRCode() {
 }
 
 function atualizarDashboard() {
-  fetch('https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec?action=listarPresencas')
+  fetch('https://script.google.com/macros/s/AKfycbxQLCKf--3hqTRrLrRhM887tBCKCs8H5J0x2BhAO0cJpsbJjs3-3P9SIEsO6Ua7F4QPyA/exec?action=listarPresencas')
     .then(res => res.json())
     .then(data => {
       const lista = document.getElementById('lista-presencas');
