@@ -45,12 +45,17 @@ document.getElementById('form-presenca').addEventListener('submit', function(e) 
     console.log('form.js (submit): URL da requisição:', requestUrl);
 
     fetch(requestUrl, {
-        method: 'POST',
-        headers: { 
-            'Content-Type': 'application/json' 
-        },
-        body: JSON.stringify(dados) // Converte o objeto para JSON
-    })
+    method: 'POST',
+    // Remova ou comente esta linha temporariamente para o teste
+    // headers: { 
+    //     'Content-Type': 'application/json' 
+    // },
+    // E altere o body para enviar como string de URL-encoded ou texto simples
+    // Em vez de JSON.stringify(dados), você pode tentar:
+    body: new URLSearchParams(dados).toString() 
+    // ou para um teste bem simples:
+    // body: `hash=<span class="math-inline">\{dados\.hash\}&nome\=</span>{dados.nome}&ra=<span class="math-inline">\{dados\.ra\}&turma\=</span>{dados.turma}`
+})
     .then(res => {
         console.log('form.js (fetch .then): Resposta recebida. Status HTTP:', res.status, res.statusText);
         if (!res.ok) {
