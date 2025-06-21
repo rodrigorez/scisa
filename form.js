@@ -16,7 +16,7 @@ document.getElementById('form-presenca').addEventListener('submit', function(e) 
   const formData = new FormData(this);
   const dados = Object.fromEntries(formData);
 
-  fetch('https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec?action=registrarPresenca', {
+  fetch('https://script.google.com/macros/s/AKfycbxQLCKf--3hqTRrLrRhM887tBCKCs8H5J0x2BhAO0cJpsbJjs3-3P9SIEsO6Ua7F4QPyA/exec?action=registrarPresenca', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(dados)
