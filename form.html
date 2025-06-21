@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>📝 Registrar Presença</title>
+</head>
+<body>
+
+  <header>
+    <h1>🎓 Registro de Presença</h1>
+  </header>
+
+  <main>
+    <form id="form-presenca">
+      <label for="turma">Turma:</label>
+      <input type="text" id="turma" name="turma" readonly />
+
+      <label for="nome">Nome completo:</label>
+      <input type="text" id="nome" name="nome" required />
+
+      <label for="ra">Registro Acadêmico (RA):</label>
+      <input type="text" id="ra" name="ra" required />
+
+      <button type="submit">Registrar Presença</button>
+    </form>
+
+    <div id="status"></div>
+  </main>
+
+  <script src="form.js"></script>
+</body>
+</html>
