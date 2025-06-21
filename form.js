@@ -1,109 +1,72 @@
+// URL base do seu Google Apps Script (ATUALIZE COM A SUA URL DE IMPLANTAÇÃO DO GAS!)
+const gasWebAppUrl = 'https://script.google.com/macros/s/AKfycbxnexm6mi-5emwkICwwO_EEnxJrbhEhYItJNf26g66BeF2USNlHbYFI3_bOWM4IIWJb-w/exec';
+
 window.onload = function () {
-  const params = new URLSearchParams(window.location.search);
-  const hash = params.get('hash');
+    const params = new URLSearchParams(window.location.search);
+    const hash = params.get('hash');
+    const statusDiv = document.getElementById('status');
 
-  if (!hash) {
-    alert("QR Code inválido.");
-    return;
-  }
+    if (!hash) {
+        statusDiv.innerHTML = '<p style="color: red;">❌ Erro: QR Code inválido ou hash ausente na URL. Tente escanear novamente.</p>';
+        return;
+    }
 
-  document.getElementById('turma').value = "INFO3A"; // Turma pode vir dinamicamente depois
+    // Pré-preenche a turma. Pode ser buscado dinamicamente do GAS no futuro.
+    document.getElementById('turma').value = "INFO3A";
+    console.log('Formulário carregado com hash:', hash);
 };
 
 document.getElementById('form-presenca').addEventListener('submit', function(e) {
-    e.preventDefault();
+    e.preventDefault(); // Impede o envio padrão do formulário
+
+    const statusDiv = document.getElementById('status');
+    statusDiv.innerHTML = '<p style="color: blue;">⌛ Enviando presença...</p>'; // Feedback visual imediato
 
     const params = new URLSearchParams(window.location.search);
     const hash = params.get('hash'); // Captura o hash da URL
 
     if (!hash) {
-        document.getElementById('status').innerHTML = '<p>❌ Erro: Hash do QR Code ausente.</p>';
+        statusDiv.innerHTML = '<p style="color: red;">❌ Erro: Hash do QR Code ausente. Não foi possível registrar a presença.</p>';
+        console.error('Erro: Hash ausente na URL ao tentar enviar formulário.');
         return;
     }
 
     const formData = new FormData(this);
-    const dados = Object.fromEntries(formData);
+    const dados = Object.fromEntries(formData); // Converte os dados do formulário para um objeto
 
-    // **ADICIONE O HASH AQUI**
-    dados.hash = hash;
+    // **ADICIONA O HASH AOS DADOS A SEREM ENVIADOS**
+    dados.hash = hash; 
+    console.log('Dados a serem enviados:', dados);
 
-    fetch('https://script.google.com/macros/s/AKfycbxnexm6mi-5emwkICwwO_EEnxJrbhEhYItJNf26g66BeF2USNlHbYFI3_bOWM4IIWJb-w/exec?action=registrarPresenca', {
+    fetch(`${gasWebAppUrl}?action=registrarPresenca`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(dados)
+        body: JSON.stringify(dados) // Converte o objeto para JSON
     })
-    .then(res => res.json())
+    .then(res => {
+        if (!res.ok) {
+            // Tenta ler o erro do corpo da resposta JSON se disponível
+            return res.json().then(errorData => {
+                throw new Error(errorData.mensagem || `HTTP error! status: ${res.status}`);
+            }).catch(() => {
+                // Se não for JSON, lança um erro genérico
+                throw new Error(`HTTP error! status: ${res.status}`);
+            });
+        }
+        return res.json();
+    })
     .then(response => {
-        const statusDiv = document.getElementById('status');
         if (response.sucesso) {
-            statusDiv.innerHTML = '<p>✅ Sua presença foi registrada!</p>';
+            statusDiv.innerHTML = '<p style="color: green;">✅ Sua presença foi registrada com sucesso!</p>';
+            // Opcional: Limpar formulário ou redirecionar
+            // document.getElementById('form-presenca').reset(); 
         } else {
-            statusDiv.innerHTML = `<p>❌ Erro: ${response.mensagem}</p>`;
+            statusDiv.innerHTML = `<p style="color: red;">❌ Erro: ${response.mensagem || 'Ocorreu um erro ao registrar a presença.'}</p>`;
+            console.error('Erro do servidor ao registrar presença:', response.mensagem);
         }
     })
     .catch(error => {
-        console.error('Erro na requisição:', error);
-        document.getElementById('status').innerHTML = `<p>❌ Erro de comunicação: ${error.message}</p>`;
+        statusDiv.innerHTML = `<p style="color: red;">❌ Erro de comunicação: ${error.message}. Tente novamente.</p>`;
+        console.error('Erro na requisição fetch para registrarPresenca:', error);
     });
 });
-
-window.onload = function () {
-    const params = new URLSearchParams(window.location.search);
-    const hash = params.get('hash');
-
-    if (!hash) {
-        document.getElementById('status').innerHTML = '<p>❌ Erro: QR Code inválido ou expirado. Tente escanear novamente.</p>';
-        // alert("QR Code inválido."); // Substituído por mensagem na div
-        return;
-    }
-
-    document.getElementById('turma').value = "INFO3A";
-};document.getElementById('form-presenca').addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    const params = new URLSearchParams(window.location.search);
-    const hash = params.get('hash'); // Captura o hash da URL
-
-    if (!hash) {
-        document.getElementById('status').innerHTML = '<p>❌ Erro: Hash do QR Code ausente.</p>';
-        return;
-    }
-
-    const formData = new FormData(this);
-    const dados = Object.fromEntries(formData);
-
-    // **ADICIONE O HASH AQUI**
-    dados.hash = hash;
-
-    fetch('https://script.google.com/macros/s/AKfycbxnexm6mi-5emwkICwwO_EEnxJrbhEhYItJNf26g66BeF2USNlHbYFI3_bOWM4IIWJb-w/exec?action=registrarPresenca', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(dados)
-    })
-    .then(res => res.json())
-    .then(response => {
-        const statusDiv = document.getElementById('status');
-        if (response.sucesso) {
-            statusDiv.innerHTML = '<p>✅ Sua presença foi registrada!</p>';
-        } else {
-            statusDiv.innerHTML = `<p>❌ Erro: ${response.mensagem}</p>`;
-        }
-    })
-    .catch(error => {
-        console.error('Erro na requisição:', error);
-        document.getElementById('status').innerHTML = `<p>❌ Erro de comunicação: ${error.message}</p>`;
-    });
-});
-
-window.onload = function () {
-    const params = new URLSearchParams(window.location.search);
-    const hash = params.get('hash');
-
-    if (!hash) {
-        document.getElementById('status').innerHTML = '<p>❌ Erro: QR Code inválido ou expirado. Tente escanear novamente.</p>';
-        // alert("QR Code inválido."); // Substituído por mensagem na div
-        return;
-    }
-
-    document.getElementById('turma').value = "INFO3A";
-};
