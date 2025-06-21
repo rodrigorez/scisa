@@ -8,12 +8,13 @@ window.onload = function () {
 
     if (!hash) {
         statusDiv.innerHTML = '<p style="color: red;">❌ Erro: QR Code inválido ou hash ausente na URL. Tente escanear novamente.</p>';
+        console.error('form.js (onload): Hash ausente na URL.');
         return;
     }
 
     // Pré-preenche a turma. Pode ser buscado dinamicamente do GAS no futuro.
     document.getElementById('turma').value = "INFO3A";
-    console.log('Formulário carregado com hash:', hash);
+    console.log('form.js (onload): Formulário carregado com hash:', hash);
 };
 
 document.getElementById('form-presenca').addEventListener('submit', function(e) {
@@ -27,7 +28,7 @@ document.getElementById('form-presenca').addEventListener('submit', function(e) 
 
     if (!hash) {
         statusDiv.innerHTML = '<p style="color: red;">❌ Erro: Hash do QR Code ausente. Não foi possível registrar a presença.</p>';
-        console.error('Erro: Hash ausente na URL ao tentar enviar formulário.');
+        console.error('form.js (submit): Hash ausente na URL ao tentar enviar formulário.');
         return;
     }
 
@@ -36,14 +37,22 @@ document.getElementById('form-presenca').addEventListener('submit', function(e) 
 
     // **ADICIONA O HASH AOS DADOS A SEREM ENVIADOS**
     dados.hash = hash; 
-    console.log('Dados a serem enviados:', dados);
+    console.log('form.js (submit): Dados a serem enviados:', dados);
+    console.log('form.js (submit): Convertendo dados para JSON para envio:', JSON.stringify(dados));
+    
+    // Constrói a URL completa para a requisição
+    const requestUrl = `${gasWebAppUrl}?action=registrarPresenca`;
+    console.log('form.js (submit): URL da requisição:', requestUrl);
 
-    fetch(`${gasWebAppUrl}?action=registrarPresenca`, {
+    fetch(requestUrl, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+            'Content-Type': 'application/json' 
+        },
         body: JSON.stringify(dados) // Converte o objeto para JSON
     })
     .then(res => {
+        console.log('form.js (fetch .then): Resposta recebida. Status HTTP:', res.status, res.statusText);
         if (!res.ok) {
             // Tenta ler o erro do corpo da resposta JSON se disponível
             return res.json().then(errorData => {
@@ -56,17 +65,16 @@ document.getElementById('form-presenca').addEventListener('submit', function(e) 
         return res.json();
     })
     .then(response => {
+        console.log('form.js (fetch .then): Resposta JSON do servidor:', response);
         if (response.sucesso) {
             statusDiv.innerHTML = '<p style="color: green;">✅ Sua presença foi registrada com sucesso!</p>';
-            // Opcional: Limpar formulário ou redirecionar
-            // document.getElementById('form-presenca').reset(); 
         } else {
             statusDiv.innerHTML = `<p style="color: red;">❌ Erro: ${response.mensagem || 'Ocorreu um erro ao registrar a presença.'}</p>`;
-            console.error('Erro do servidor ao registrar presença:', response.mensagem);
+            console.error('form.js (fetch .then): Erro do servidor ao registrar presença:', response.mensagem);
         }
     })
     .catch(error => {
         statusDiv.innerHTML = `<p style="color: red;">❌ Erro de comunicação: ${error.message}. Tente novamente.</p>`;
-        console.error('Erro na requisição fetch para registrarPresenca:', error);
+        console.error('form.js (fetch .catch): Erro na requisição fetch para registrarPresenca:', error);
     });
 });
