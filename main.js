@@ -2,7 +2,7 @@ function gerarQRCode() {
   fetch('https://script.google.com/macros/s/AKfycbxnexm6mi-5emwkICwwO_EEnxJrbhEhYItJNf26g66BeF2USNlHbYFI3_bOWM4IIWJb-w/exec?action=criarHash')
     .then(res => res.json())
     .then(data => {
-      const url = `https://seu-dominio.com/form.html?hash=${data.hash}`;
+      const url = `https://rodrigorez.github.io/scisa/form.html?hash=${data.hash}`;
       document.getElementById('qrcode-container').innerHTML = `
         <img src="https://quickchart.io/qr?text=${url}&size=200x200" />
       `;
