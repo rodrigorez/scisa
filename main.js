@@ -1,5 +1,5 @@
 // Variáveis globais para armazenar as configurações carregadas do GAS
-let qrCodeRefreshInterval = 20;   // Valor padrão, será sobrescrito pelo GAS
+let qrCodeRefreshInterval = 240;   // Valor padrão, será sobrescrito pelo GAS
 let dashboardRefreshInterval = 5; // Valor padrão, será sobrescrito pelo GAS
 let gasWebAppUrl = 'https://script.google.com/macros/s/AKfycbxnexm6mi-5emwkICwwO_EEnxJrbhEhYItJNf26g66BeF2USNlHbYFI3_bOWM4IIWJb-w/exec'; // ATUALIZE COM A SUA URL DE IMPLANTAÇÃO DO GAS!
 
