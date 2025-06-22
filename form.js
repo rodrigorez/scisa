@@ -1,7 +1,7 @@
 // form.js
 
-// URL base do seu Google Apps Script
-// **ESTA URL DEVE SER A URL ATIVA DE IMPLANTAÇÃO DO SEU GAS**
+// **URL base do seu Google Apps Script**
+// ESTA URL FOI ATUALIZADA COM BASE NO QUE VOCÊ FORNECEU.
 const gasWebAppUrl = 'https://script.google.com/macros/s/AKfycbw8QD_J5BWdFOseGOOvQji4FBKgrgGSpvd9m16ozvJR-NJFMSrhsy3bTev2UOhAkcQCMg/exec';
 
 window.onload = function () {
