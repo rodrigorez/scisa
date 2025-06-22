@@ -1,7 +1,7 @@
 // Variáveis globais para armazenar as configurações carregadas do GAS
 let qrCodeRefreshInterval = 240;   // Valor padrão, será sobrescrito pelo GAS
 let dashboardRefreshInterval = 5; // Valor padrão, será sobrescrito pelo GAS
-let gasWebAppUrl = 'https://script.google.com/macros/s/AKfycbxnexm6mi-5emwkICwwO_EEnxJrbhEhYItJNf26g66BeF2USNlHbYFI3_bOWM4IIWJb-w/exec'; // ATUALIZE COM A SUA URL DE IMPLANTAÇÃO DO GAS!
+let gasWebAppUrl = 'https://script.google.com/macros/s/AKfycbw8QD_J5BWdFOseGOOvQji4FBKgrgGSpvd9m16ozvJR-NJFMSrhsy3bTev2UOhAkcQCMg/exec'; // ATUALIZE COM A SUA URL DE IMPLANTAÇÃO DO GAS!
 
 // Função para buscar configurações do Google Apps Script
 async function fetchConfigs() {
