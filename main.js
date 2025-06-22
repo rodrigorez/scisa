@@ -4,12 +4,12 @@
 let qrCodeRefreshInterval = 240;   // Valor padrão, será sobrescrito pelo GAS
 let dashboardRefreshInterval = 5; // Valor padrão, será sobrescrito pelo GAS
 
-// URL base do seu Google Apps Script
-// **ESTA URL DEVE SER A URL ATIVA DE IMPLANTAÇÃO DO SEU GAS**
+// **URL base do seu Google Apps Script**
+// ESTA URL FOI ATUALIZADA COM BASE NO QUE VOCÊ FORNECEU.
 const gasWebAppUrl = 'https://script.google.com/macros/s/AKfycbw8QD_J5BWdFOseGOOvQji4FBKgrgGSpvd9m16ozvJR-NJFMSrhsy3bTev2UOhAkcQCMg/exec'; 
 
-// URL base do seu GitHub Pages para o formulário do aluno
-// **ATUALIZE ESTA URL COM O SEU DOMÍNIO COMPLETO DO GITHUB PAGES ONDE form.html ESTÁ HOSPEDADO!**
+// **URL base do seu GitHub Pages para o formulário do aluno**
+// CERTIFIQUE-SE DE QUE ESTA URL CORRESPONDE EXATAMENTE ONDE SEU form.html ESTÁ NO GITHUB PAGES!
 const gitHubPagesFormUrlBase = 'https://rodrigorez.github.io/scisa/form.html';
 
 // Função para buscar configurações do Google Apps Script
