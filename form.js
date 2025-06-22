@@ -1,7 +1,7 @@
 // form.js - Implementação com CORS Anywhere Proxy
 
 // URL base do seu Google Apps Script (MANTENHA A URL CORRETA QUE VOCÊ JÁ TEM)
-const gasWebAppUrl = 'https://script.google.com/macros/s/AKfycbxnexm6mi-5emwkICwwO_EEnxJrbhEhYItJNf26g66BeF2USNlHbYFI3_bOWM4IIWJb-w/exec'; 
+const gasWebAppUrl = 'https://script.google.com/macros/s/AKfycbw8QD_J5BWdFOseGOOvQji4FBKgrgGSpvd9m16ozvJR-NJFMSrhsy3bTev2UOhAkcQCMg/exec'; 
 
 // URL do serviço CORS Anywhere. ATENÇÃO: Este é um serviço público e não é recomendado para produção com dados sensíveis.
 // Para MVP e testes, é eficaz.
