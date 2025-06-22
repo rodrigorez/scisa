@@ -1,7 +1,16 @@
+// main.js
+
 // Variáveis globais para armazenar as configurações carregadas do GAS
 let qrCodeRefreshInterval = 240;   // Valor padrão, será sobrescrito pelo GAS
 let dashboardRefreshInterval = 5; // Valor padrão, será sobrescrito pelo GAS
-let gasWebAppUrl = 'https://script.google.com/macros/s/AKfycbw8QD_J5BWdFOseGOOvQji4FBKgrgGSpvd9m16ozvJR-NJFMSrhsy3bTev2UOhAkcQCMg/exec'; // ATUALIZE COM A SUA URL DE IMPLANTAÇÃO DO GAS!
+
+// URL base do seu Google Apps Script
+// **ESTA URL DEVE SER A URL ATIVA DE IMPLANTAÇÃO DO SEU GAS**
+const gasWebAppUrl = 'https://script.google.com/macros/s/AKfycbw8QD_J5BWdFOseGOOvQji4FBKgrgGSpvd9m16ozvJR-NJFMSrhsy3bTev2UOhAkcQCMg/exec'; 
+
+// URL base do seu GitHub Pages para o formulário do aluno
+// **ATUALIZE ESTA URL COM O SEU DOMÍNIO COMPLETO DO GITHUB PAGES ONDE form.html ESTÁ HOSPEDADO!**
+const gitHubPagesFormUrlBase = 'https://rodrigorez.github.io/scisa/form.html';
 
 // Função para buscar configurações do Google Apps Script
 async function fetchConfigs() {
@@ -15,7 +24,7 @@ async function fetchConfigs() {
         console.log('Configurações carregadas do GAS:', configs);
 
         if (configs) {
-            qrCodeRefreshInterval = configs.qrCodeRefresh || 20; // Fallback para 20s
+            qrCodeRefreshInterval = configs.qrCodeRefresh || 240; // Fallback para 240s
             dashboardRefreshInterval = configs.dashboardRefresh || 5; // Fallback para 5s
             
             // Inicia a atualização do dashboard com o intervalo obtido
@@ -49,8 +58,8 @@ function gerarQRCode() {
         })
         .then(data => {
             if (data && data.hash) {
-                // ATUALIZE esta URL com o seu domínio do GitHub Pages!
-                const formUrl = `https://rodrigorez.github.io/scisa/form.html?hash=${data.hash}`; 
+                // Monta a URL completa do formulário com o hash
+                const formUrl = `${gitHubPagesFormUrlBase}?hash=${data.hash}`; 
                 document.getElementById('qrcode-container').innerHTML = `
                     <img src="https://quickchart.io/qr?text=${encodeURIComponent(formUrl)}&size=200x200" alt="QR Code" />
                 `;
